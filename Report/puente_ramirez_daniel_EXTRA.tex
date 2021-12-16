@@ -1,3 +1,82 @@
+\documentclass[11pt]{report}
+\usepackage{outline} \usepackage{pmgraph} \usepackage[normalem]{ulem}
+\usepackage{graphicx} 
+\usepackage{listings} \usepackage{xcolor}
+
+\lstset{ 
+    language=Matlab, % choose the language of the code
+    numbers=left, % where to put the line-numbers
+    frame=single,
+    breaklines=true,
+	breakatwhitespace=false,
+	%morecomment=[l]{%}
+}
+
+
+\title{
+\includegraphics[width=1.75in]{./img/Escudo.PNG} \\
+\vspace*{1in}
+\textbf{Detección de baterías de coche}}
+\author{Daniel Puente Ramírez
+		\vspace*{1.5in} \\
+		Hardware de Aplicación Específica\\
+		Grado en Ingeniería Informática\\
+        \textbf{Universidad de Burgos}\\
+        Burgos, España
+       } \date{\today}
+%--------------------Make usable space all of page
+\setlength{\oddsidemargin}{0in} \setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{0in}     \setlength{\headsep}{-.25in}
+\setlength{\textwidth}{6.5in}   \setlength{\textheight}{8.5in}
+%--------------------Indention
+\setlength{\parindent}{1cm}
+
+\begin{document}
+%--------------------Title Page
+\maketitle
+\clearpage
+\thispagestyle{empty}
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+
+
+\section{Introduction}
+\setcounter{page}{1}
+Write your semester project introduction in this page. 
+
+\centering 
+
+\begin{tabular}{|c|l|l|c|}
+    \hline
+    \# & Component Name & Model & Price (PKR) \\
+    \hline
+    1 & Microcontroller & ATMega16 & 200 \\
+    \hline
+    2 & Breadboard & DDDDDD & 100 \\
+    \hline
+    \multicolumn{3}{|r|}{Total} & \\ 
+    \hline 
+\end{tabular}
+
+\section{Diagram}
+
+Embed diagram from Fritzing and describe interconnections.
+
+\includegraphics[width=6in]{./img/escudo}
+    
+\section{Simulation Model}
+
+Embed Proteus model here. 
+
+\includegraphics[width=6in]{./img/escudo}
+    
+    
+    
+\newpage
+\section{Código}
+
+\begin{lstlisting}
 % Optional submission - Daniel Puente Ramirez
 clear;clc;close all force;
 video_file = './Video/vid01.mp4';
@@ -73,7 +152,7 @@ while hasFrame(video)
     limInf=altura-8;
     contFAct=0;
     
-    % Franja de detección
+    % Franja de deteccion
     x=[1080 0];
     line(x,[limSup limSup],'Color','g');
     line(x,[limInf limInf],'Color','g');
@@ -137,3 +216,11 @@ waitfor(f);
 end
 
 
+
+
+\end{lstlisting}
+
+
+    
+
+\end{document}
