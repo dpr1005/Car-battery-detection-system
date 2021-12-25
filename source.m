@@ -1,7 +1,7 @@
 % Optional submission - Daniel Puente Ramirez
 clear;clc;close all force;
 folder = './Video/';
-video_name = 'Vid01.mp4';
+video_name = 'Vid02.mp4';
 name = strsplit(video_name, '.');
 video_file = strcat(folder, video_name);
 fondo_file = strcat(folder, 'fondo_', string(name(1)), '.mat');
@@ -52,14 +52,7 @@ while hasFrame(video)
     
     ImgArea=bwareaopen(ImgFiltrada,200000);
     if mod(n_frame, jump) == 0
-        subplot(1,7,1); imshow(prueba);
-        subplot(1,7,2); imshow(aAjustada);
-        subplot(1,7,3); imshow(aAjustadaEros);
-        subplot(1,7,4); imshow(aAjustadaFill);
-        subplot(1,7,5); imshow(aAjustadaDil);
-        subplot(1,7,6); imshow(ImgFiltrada);
-        subplot(1,7,7); imshow(ImgArea);
-        
+        imshow(frame);
     end
     [L,num] = bwlabel(ImgArea);
     rect= regionprops(L,'BoundingBox');
@@ -79,15 +72,17 @@ while hasFrame(video)
     if mod(n_frame, jump) == 0
         for k=1: length(rect)
             bb= rect(k).BoundingBox;
-            rectangle('Position',[bb(1),bb(2),bb(3),bb(4)],'LineWidth',2,'EdgeColor','r');
             
             centro = rprop(k).Centroid;
-            text(centro(1), centro(2),"*", 'FontSize',20,'Color','g');
+            text(centro(1)+250, centro(2),"*", 'FontSize',20,'Color','g');
             
             if centro(2)> limInf && centro(2)<limSup
                 contFAct=contFAct+1;
+                rectangle('Position',[bb(1)+250,bb(2),bb(3)+100,bb(4)],'LineWidth',2,'EdgeColor','r');
                 line(x,[limSup limSup],'Color','r');
                 line(x,[limInf limInf],'Color','r');
+            else
+                rectangle('Position',[bb(1)+250,bb(2),bb(3)+100,bb(4)],'LineWidth',2,'EdgeColor','c');
             end
             
         end
@@ -107,6 +102,7 @@ while hasFrame(video)
 end
 
 waitfor(msgbox(['Se han encontrado ',num2str(cont),' baterias']))
+disp(['Se han encontrado ',num2str(cont),' baterias'])
 
 
 function fondo = calcular_fondo(file, fondo_file)
