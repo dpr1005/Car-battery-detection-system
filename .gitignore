@@ -477,3 +477,8 @@ TSWLatexianTemp*
 # glossaries
 
 # End of https://www.toptal.com/developers/gitignore/api/latex,tex
+
+
+# User added
+*.mp4
+.DS_Store

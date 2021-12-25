@@ -1,6 +1,6 @@
 % Optional submission - Daniel Puente Ramirez
 clear;clc;close all force;
-video_file = './Video/vid01.mp4';
+video_file = './Video/Vid00.mp4';
 fondo_file = './fondo.mat';
 
 jump = 45;
@@ -28,23 +28,19 @@ while hasFrame(video)
     n_frame = n_frame + 1;
     frame = readFrame(video);
     if mod(n_frame, jump) ~= 0
-        %disp([n_frame, mod(n_frame, 240)]);
         continue
     end
     frameD = im2double(frame);
     frameGris = im2gray(frameD);
     prueba = abs(frameGris - fondoDGris);
     prueba = prueba(:,[250:750]);
-    %f = figure;
-    %imshow(prueba);
-    %waitfor(f);
     
     lvl = graythresh(prueba);
     aAjustada = im2bw(prueba,lvl);
-    se = strel('disk',15);
+    se = strel('disk',12);
     aAjustadaEros= imerode(aAjustada,se);
     
-    se = strel('square',100);
+    se = strel('square',80);
     aAjustadaFill = imfill(aAjustadaEros,'holes');
     aAjustadaDil=imdilate(aAjustadaFill,se);
     
@@ -69,8 +65,8 @@ while hasFrame(video)
     [alto,~,~]=size(frame);
     altura=floor(alto*2/3);
     
-    limSup=altura+400;
-    limInf=altura-8;
+    limSup=alto-1;
+    limInf=alto/2;
     contFAct=0;
     
     % Franja de detección
@@ -87,6 +83,8 @@ while hasFrame(video)
             
             if centro(2)> limInf && centro(2)<limSup
                 contFAct=contFAct+1;
+                line(x,[limSup limSup],'Color','r');
+                line(x,[limInf limInf],'Color','r');
             end
             
         end
@@ -99,9 +97,9 @@ while hasFrame(video)
         contFAct=contFAct+1;
         contFAnt=contFAct;
     end
+    disp(cont);
     if mod(n_frame, jump) == 0
         pause(0.2);
-        disp(n_frame);
     end
 end
 
