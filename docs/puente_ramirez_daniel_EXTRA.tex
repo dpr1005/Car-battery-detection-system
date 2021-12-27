@@ -44,7 +44,7 @@
 \title{
 \includegraphics[width=1.75in]{./img/Escudo.PNG} \\
 \vspace*{1in}
-\Huge\textbf{Detección de baterías de coche} 
+\Huge\textbf{Detección de baterías de arranque} 
 
 \includegraphics[width=\textwidth]{img/Clarios}}
 \author{Daniel Puente Ramírez
@@ -63,8 +63,9 @@
 
 \begin{document}
 %--------------------Title Page
+\thispagestyle{empty}
 \maketitle
-\clearpage
+\newpage
 \thispagestyle{empty}
 \tableofcontents
 \thispagestyle{empty}
@@ -79,7 +80,7 @@ En ella se plantea el problema de contar baterías de coche, ver Sección~\ref{s
 
 \vspace{5cm}
 \section{Agradecimientos}
-Agradecer a Clarios Iberia S.L. la colaboración con la práctica, cediendo el material que se va a utilizar de forma desinteresada. 
+Agradecer a Clarios Iberia P$\&$D S.L. la colaboración con la práctica, cediendo el material que se va a utilizar de forma desinteresada. 
 \newpage
 \section{Planteamiento del problema}\label{sec:problema}
 El problema ante el que nos encontramos se encuentra dentro de la etapa final de fabricación de baterías para coches. Después de todo el proceso de producción, llenado, reposo, \textit{testing} y etiquetado, las baterías han de ser paletizadas para su transporte. Debido a las características de los equipos de trabajo, no se desea contar con un sistema de Inteligencia Artificial, sino que se desea realizar un procesamiento de imágenes en tiempo real. 
@@ -158,7 +159,7 @@ Una de las principales características que se desean es la generalización, tal
 
 \begin{enumerate}
 \item Conocemos que la distancia se va a situar en un rango de entre veinte y cincuenta centímetros. Además, comentando el problema con el Ingeniero Jefe de Mantenimiento de la planta, comenta que el ancho de la cinta de transporte es de 170 milímetros, luego incluso con la máxima cercanía, tendremos la cinta al completo.
-\item Las baterías poseen una altura de entre 127 y 190 milímetros, por lo tanto en ningún caso tendremos problemas de alturas. El Vid00 posee una distancia mayor a la cinta que los Vid01 y Vid02.
+\item Las baterías poseen una altura de entre 175 y 190 milímetros, por lo tanto en ningún caso tendremos problemas de alturas. El Vid00 posee una distancia mayor a la cinta que los Vid01 y Vid02.
 \item Para hacer un programa robusto y tolerante a vibraciones y pequeños movimientos de la cámara, el Vid00 está <<más o menos>> recto, el Vid01 está torcido a la izquierda, y el Vid02 a la derecha.
 \item La lógica del producto soporta que una batería se encuentre un tiempo indefinido delante de la cámara. Sólo será contabilizada una vez.
 \item Debido a que la cámara graba, independientemente si es para una aplicación de tiempo real o procesado de imágenes, a 60fps 1080x1920 con un codec H.264, el programa configura una variable \textit{jump}, la cual será la encargada de analizar un \textit{frame} cada \textit{jump} de \textit{frames}. Por ejemplo, si $jump = 45$, cada 45 \textit{frames} se analizará un \textit{frame}.
@@ -245,7 +246,7 @@ Se puede comprobar como el paso 6 es muy similar al 5, según el reflejo de las 
 \end{figure}
 \end{center}
 
-Sobre la imagen número 7 podemos ver dos líneas verdes, una en el medio de la imagen y otra en el límite inferior, simbolizan el área de detección. Cuando el centroide del objeto detectado se encuentra dentro de ese área es cuando se cuenta la batería. Si en el \textit{frame} anteriormente analizado ya había una batería el sistema entiende que es la misma, si no la había, la computa como una nueva. Con esto da soporte a que una batería se quede parada en el área de detección, lo cual ocurre en los vídeos de prueba Vid01 y Vid02. Debido a que el avance de la cinta de transporte es mejor a 3km/h, no hay opción a que entre dos \textit{frames} salga y entre una batería, imposibilitando la no detección de una batería. En este caso esta figura está actuando sobre el Vid02, a parte del ángulo de la cinta con respecto a la cámara, la ta tapa de batería es azul y está relativamente cerca de la misma.
+Sobre la imagen número 7 podemos ver dos líneas verdes, una en el medio de la imagen y otra en el límite inferior, simbolizan el área de detección. Cuando el centroide del objeto detectado se encuentra dentro de ese área es cuando se cuenta la batería. Si en el \textit{frame} anteriormente analizado ya había una batería el sistema entiende que es la misma, si no la había, la computa como una nueva. Con esto da soporte a que una batería se quede parada en el área de detección, lo cual ocurre en los vídeos de prueba Vid01 y Vid02. Debido a que el avance de la cinta de transporte es de 30.02m/min (calculado sobre el Vid02, la batería en cuestión es una \textit{Batería de Coche Varta Blue Dinamic E43 72Ah}, con un largo de 278 milímetros, 1.8 segundos en pasar una marca, luego 30.02400 m/min), no hay opción a que entre dos \textit{frames} salga y entre una batería, imposibilitando la no detección de una batería. En este caso esta figura está actuando sobre el Vid02, a parte del ángulo de la cinta con respecto a la cámara, la ta tapa de batería es azul y está relativamente cerca de la misma.
 
 En la Figura~\ref{fig:procesado3} se aprecia como en el momento de la detección las líneas del área de detección cambian de color a rojo. Esta figura es resultante del Vid00, en este caso estamos más alejados de la cinta de transporte y no tenemos <<de lleno>> la intersección con la máquina anterior (parte de arriba) y una sombra considerable en la parte inferior, después de todo el procesado se es capaz de contabilizar la batería.
 
